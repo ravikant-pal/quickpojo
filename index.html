@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pojo Builder | Getter & Setter Maker</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./codemirror-5.57.0/doc/docs.css" />
+    <link rel="stylesheet" href="./codemirror-5.57.0/lib/codemirror.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./codemirror-5.57.0/theme/darcula.css" />
+    <link
+      rel="stylesheet"
+      href="./codemirror-5.57.0/addon/hint/show-hint.css"
+    />
+    <script src="./codemirror-5.57.0/lib/codemirror.js"></script>
+    <script src="./codemirror-5.57.0/addon/mode/loadmode.js"></script>
+    <script src="./codemirror-5.57.0/mode/meta.js"></script>
+    <script src="./codemirror-5.57.0/addon/selection/active-line.js"></script>
+    <script src="./codemirror-5.57.0/addon/edit/matchbrackets.js"></script>
+    <script src="./codemirror-5.57.0/addon/hint/show-hint.js"></script>
+    <script src="./codemirror-5.57.0/mode/clike/clike.js"></script>
+    <!-- Bootstrap cdns -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <!-- jquery for popover -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"
+      integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf"
+      crossorigin="anonymous"
+    ></script>
+    <!-- fontawsome -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </head>
+  <body>
+    <header>
+      <nav
+        class="navbar navbar-light bg-light shadow-sm border-bottom text-center"
+      >
+        <span class="navbar-brand mb-0 h1">Navbar</span>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="row mt-5">
+        <div class="col-md-6 p-3">
+          <form method="POST" action="" id="login">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="card shadow-lg">
+                  <div class="card-header text-center"><b>Create New</b></div>
+                  <div class="card-body">
+                    <div class="row p-3">
+                      <div class="col-sm-4">
+                        <h5>class</h5>
+                      </div>
+                      <div class="col-sm-4">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm mb-2"
+                          name="class"
+                          id="class"
+                          placeholder="Example"
+                          required
+                        />
+                      </div>
+                      <div class="col-sm-4 text-center">
+                        <h5>{</h5>
+                      </div>
+                    </div>
+                    <div id="dyn"></div>
+                    <div class="form-row">
+                      <div class="col-sm-5">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm mb-2"
+                          id="datatype"
+                          name="datatype"
+                          placeholder="data type"
+                          required
+                        />
+                      </div>
+                      <div class="col-sm-5">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm mb-2"
+                          name="fieldname"
+                          id="fieldname"
+                          placeholder="field name"
+                          required
+                        />
+                      </div>
+                      <div class="col-sm-2">
+                        <div class="row">
+                          <div class="col-md-12 text-center">
+                            <button
+                              type="button"
+                              class="btn btn-link"
+                              onclick="addVariable()"
+                            >
+                              <i class="fas fa-plus-circle"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col-sm-4">
+                        <h5>}</h5>
+                      </div>
+                    </div>
+                    <div class="card-footer">
+                      <div class="form-row">
+                        <div class="col-md-12 text-center">
+                          <button
+                            type="submit"
+                            class="btn btn-sm btn-block btn-primary mb-2"
+                          >
+                            Generate
+
+                            <i class="fa fa-arrow-circle-right"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 p-0">
+                <div class="mt-5">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="noArgConstructor"
+                          name="noArgConstructor"
+                          checked
+                        />
+                        <label class="form-check-label" for="noArgConstructor"
+                          >No Arg constructor</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="allArgConstructor"
+                          name="allArgConstructor"
+                        />
+                        <label class="form-check-label" for="allArgConstructor"
+                          >All Arg constructor</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="getter"
+                          name="getter"
+                          checked
+                        />
+                        <label class="form-check-label" for="getter"
+                          >Getter</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="setter"
+                          name="setter"
+                          checked
+                        />
+                        <label class="form-check-label" for="setter"
+                          >Setter</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="equals"
+                          name="equals"
+                        />
+                        <label class="form-check-label" for="equals"
+                          >equals()</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="hashCode"
+                          name="hashCode"
+                        />
+                        <label class="form-check-label" for="hashCode"
+                          >hashCode()</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="toStr"
+                          name="toStr"
+                        />
+                        <label class="form-check-label" for="toStr"
+                          >toString()</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-6 p-3">
+          <div class="card shadow-lg">
+            <div class="card-header text-center">
+              <b>Your POJO will be here soon..</b>
+            </div>
+            <div class="card-body">
+              <textarea id="code" name="code"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./js/crud.js"></script>
+    <script src="./js/main.js"></script>
+  </body>
+</html>

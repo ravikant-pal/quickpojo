@@ -1,0 +1,15 @@
+.CodeMirror {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+#footer {
+  margin-bottom: 0;
+  width: 100%;
+  /* position: absolute; */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+.footer-block {
+  margin: 25px 0;
+}
