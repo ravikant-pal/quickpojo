@@ -13,7 +13,7 @@ $(function () {
     //use on if jQuery 1.7+
     e.preventDefault(); //prevent form from submitting
     var data = $("#login :input").serializeArray();
-    console.log(data);
+    // console.log(data);
 
     dt = [];
     fn = [];
@@ -33,7 +33,7 @@ $(function () {
       }
     });
 
-    console.log(toBeGenerate);
+    // console.log(toBeGenerate);
 
     let str = "";
 
@@ -58,15 +58,15 @@ $(function () {
     if (toBeGenerate.toStr) {
       str += ganToString(cls, dt, fn);
     }
-    console.log(str);
+    // console.log(str);
     setupEditor(str, cls, dt, fn);
   });
 });
 
 function ganNoArgConstructor(cls) {
-  return `public ${cls.className}() { 
-
-} \n\n`;
+  return `
+    public ${cls.className}() { 
+    } \n`;
 }
 
 function ganAllArgConstructor(cls, dt, fn) {
@@ -75,23 +75,26 @@ function ganAllArgConstructor(cls, dt, fn) {
   let flds = "";
   for (let i = 0; i < len - 1; i++) {
     args += `${dt[i]} ${fn[i]}, `;
-    flds += `\tthis.${fn[i]}=${fn[i]};\n`;
+    flds += `\tthis.${fn[i]} = ${fn[i]};
+    `;
   }
   args += `${dt[len - 1]} ${fn[len - 1]}`;
-  flds += `\tthis.${fn[len - 1]}=${fn[len - 1]};\n`;
+  flds += `\tthis.${fn[len - 1]} = ${fn[len - 1]};`;
 
-  return `public ${cls.className}(${args}) { 
-${flds}
-} \n\n`;
+  return `
+    public ${cls.className}(${args}) { 
+    ${flds}
+    } \n`;
 }
 
 function ganGetter(dt, fn) {
   let len = dt.length;
   let str = "";
   for (let i = 0; i < len; i++) {
-    str += `public ${dt[i]} get${fn[i][0].toUpperCase() + fn[i].slice(1)}() { 
-    return ${fn[i]}; 
-} \n\n`;
+    str += `
+    public ${dt[i]} get${fn[i][0].toUpperCase() + fn[i].slice(1)}() { 
+        return ${fn[i]}; 
+    } \n`;
   }
   return str;
 }
@@ -100,23 +103,24 @@ function ganSetter(dt, fn) {
   let len = dt.length;
   let str = "";
   for (let i = 0; i < len; i++) {
-    str += `public void set${fn[i][0].toUpperCase() + fn[i].slice(1)}(${
-      dt[i]
-    } ${fn[i]}) { 
-      this.${fn[i]}=${fn[i]}; 
-} \n\n`;
+    str += `
+    public void set${fn[i][0].toUpperCase() + fn[i].slice(1)}(${dt[i]} ${
+      fn[i]
+    }) { 
+        this.${fn[i]} = ${fn[i]}; 
+    } \n`;
   }
   return str;
 }
 
 function ganEquals(cls) {
   return `
-  @Override
-  public boolean equals(Object o) { 
-      if(this == o) return true;
-      if(!(o instanceof ${cls.className})) return false;
-      return true;
-  } \n\n`;
+    @Override
+    public boolean equals(Object o) { 
+        if(this == o) return true;
+        if(!(o instanceof ${cls.className})) return false;
+        return true;
+    } \n`;
 }
 
 function ganHashCode(fn) {
@@ -130,7 +134,7 @@ function ganHashCode(fn) {
     @Override
     public int hashCode() { 
         return Object.hash(${args})
-    } \n\n`;
+    } \n`;
 }
 
 function ganToString(cls, dt, fn) {
@@ -139,35 +143,36 @@ function ganToString(cls, dt, fn) {
   for (let i = 0; i < len; i++) {
     if (i == 0) {
       if (dt[i] === "String") {
-        str += `\t"${fn[i]}='" + ${fn[i]} + '\\'' +\n`;
+        str += `\t   "${fn[i]}='" + ${fn[i]} + '\\'' +\n`;
       } else {
-        str += `\t"${fn[i]}=" + ${fn[i]} + \n`;
+        str += `\t   "${fn[i]}=" + ${fn[i]} + \n`;
       }
     } else {
       if (dt[i] === "String") {
-        str += `\t", ${fn[i]}='" + ${fn[i]} + '\'' +\n`;
+        str += `\t\t\t   ", ${fn[i]}='" + ${fn[i]} + '\\'' +\n`;
       } else {
-        str += `\t", ${fn[i]}=" + ${fn[i]} + \n`;
+        str += `\t\t\t   ", ${fn[i]}=" + ${fn[i]} + \n`;
       }
     }
   }
 
   return `
-      @Override
-      public int toString() { 
+    @Override
+    public String toString() { 
         return "${cls.className}{" +
-    ${str}
-        '};' \n\n`;
+        ${str}\t\t\t   '}'; \n
+    }`;
 }
 
 function setupEditor(str, cls, dt, fn) {
   let clsstr = `public class ${cls.className} {\n`;
   let len = fn.length;
   let tempvrls = "";
-  for (let i = 0; i < len - 1; i++) {
-    tempvrls += `private ${dt[i]} ${fn[i]};\n`;
+  for (let i = 0; i < len; i++) {
+    tempvrls += `
+    private ${dt[i]} ${fn[i]};`;
   }
-  clsstr += tempvrls;
-  clsstr += str + "}";
+  clsstr += tempvrls + "\n";
+  clsstr += `${str}\n}`;
   editor.setValue(clsstr);
 }
