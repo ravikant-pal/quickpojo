@@ -19,7 +19,7 @@ html {
   margin: 25px 0;
 }
 
-@media screen and (max-width: 414px) {
+@media screen and (max-width: 767px) {
   .col-md-4 {
     margin-left: 25%;
   }

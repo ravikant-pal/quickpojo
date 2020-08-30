@@ -6,68 +6,66 @@ var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
   mode: "text/x-java",
 });
 editor.setSize(null, 380);
-
 $(function () {
-  //shorthand document.ready function
-  $("#login").on("submit", function (e) {
-    //use on if jQuery 1.7+
-    e.preventDefault(); //prevent form from submitting
-    var data = $("#login :input").serializeArray();
-    // console.log(data);
-
-    dt = [];
-    fn = [];
-    cls = {};
-
-    let toBeGenerate = {};
-
-    data.forEach((d) => {
-      if (d.value === "on") {
-        toBeGenerate[d.name] = true;
-      } else if (d.name === "datatype") {
-        dt.push(d.value);
-      } else if (d.name === "fieldname") {
-        fn.push(d.value);
-      } else {
-        cls[d.name + "Name"] = d.value;
-      }
-    });
-
-    // console.log(toBeGenerate);
-
-    let str = "";
-
-    if (toBeGenerate.noArgConstructor) {
-      str += ganNoArgConstructor(cls);
-    }
-    if (toBeGenerate.allArgConstructor) {
-      str += ganAllArgConstructor(cls, dt, fn);
-    }
-    if (toBeGenerate.getter) {
-      str += ganGetter(dt, fn);
-    }
-    if (toBeGenerate.setter) {
-      str += ganSetter(dt, fn);
-    }
-    if (toBeGenerate.equals) {
-      str += ganEquals(cls);
-    }
-    if (toBeGenerate.hashCode) {
-      str += ganHashCode(fn);
-    }
-    if (toBeGenerate.toStr) {
-      str += ganToString(cls, dt, fn);
-    }
-    // console.log(str);
-    setupEditor(str, cls, dt, fn);
-  });
-
   new ClipboardJS(".btn-outline-default", {
     text: function () {
       return $("#code").getCodeMirror().getDoc().getValue();
     },
   });
 });
+
+function submitData() {
+  var data = $("#user-input :input").serializeArray();
+  // console.log(data);
+
+  dt = [];
+  fn = [];
+  cls = {};
+
+  let toBeGenerate = {};
+  const regexDt = /datatype/g;
+  const regexFn = /fieldname/g;
+
+  data.forEach((d) => {
+    if (d.value === "on") {
+      toBeGenerate[d.name] = true;
+    } else if (d.name.match(regexDt)) {
+      dt.push(d.value);
+    } else if (d.name.match(regexFn)) {
+      fn.push(d.value);
+    } else {
+      cls[d.name + "Name"] = d.value;
+    }
+  });
+
+  // console.log(toBeGenerate);
+
+  let str = "";
+
+  if (toBeGenerate.noArgConstructor) {
+    str += ganNoArgConstructor(cls);
+  }
+  if (toBeGenerate.allArgConstructor) {
+    str += ganAllArgConstructor(cls, dt, fn);
+  }
+  if (toBeGenerate.getter) {
+    str += ganGetter(dt, fn);
+  }
+  if (toBeGenerate.setter) {
+    str += ganSetter(dt, fn);
+  }
+  if (toBeGenerate.equals) {
+    str += ganEquals(cls);
+  }
+  if (toBeGenerate.hashCode) {
+    str += ganHashCode(fn);
+  }
+  if (toBeGenerate.toStr) {
+    str += ganToString(cls, dt, fn);
+  }
+  // console.log(str);
+  setupEditor(str, cls, dt, fn);
+}
 
 function ganNoArgConstructor(cls) {
   return `

@@ -23,8 +23,8 @@ function displayItems() {
     <div class="col-5">
       <input
         type="text"
-        class="form-control form-control-sm mb-2 font-weight-bold"
-        name="datatype"
+        class="form-control form-control-sm mb-2 font-weight-bold dtvl"
+        name="datatype_VrD${variables.id}"
         value="${variable.datatype}"
         placeholder="data type"
         required
@@ -33,8 +33,8 @@ function displayItems() {
     <div class="col-5">
       <input
         type="text"
-        class="form-control form-control-sm mb-2"
-        name="fieldname"
+        class="form-control form-control-sm mb-2 alvl"
+        name="fieldname_VrD${variables.id}"
         value="${variable.fieldname}"
         placeholder="field name"
         required
