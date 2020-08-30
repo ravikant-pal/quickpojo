@@ -1,1 +1,1 @@
-# pojobuilder
+# quickpojo

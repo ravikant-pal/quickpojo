@@ -20,7 +20,7 @@ function displayItems() {
   dynamic_list.innerHTML = "";
   variables.forEach(function (variable) {
     dynamic_list.innerHTML += `<div class="form-row" id="rv_${variable.id}">
-    <div class="col-sm-5">
+    <div class="col-5">
       <input
         type="text"
         class="form-control form-control-sm mb-2 font-weight-bold"
@@ -30,7 +30,7 @@ function displayItems() {
         required
       />
     </div>
-    <div class="col-sm-5">
+    <div class="col-5">
       <input
         type="text"
         class="form-control form-control-sm mb-2"
@@ -40,7 +40,7 @@ function displayItems() {
         required
       />
     </div>
-    <div class="col-sm-2">
+    <div class="col-2">
       <div class="row">
         <div class="col-md-12 text-center">
           <button type="button" class="btn btn-link text-danger" onclick="remove(${variable.id})">

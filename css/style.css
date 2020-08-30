@@ -1,6 +1,11 @@
+html {
+  font-family: monospace, monospace;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 .CodeMirror {
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  font-size: 10pt;
 }
 
 #footer {
@@ -12,4 +17,10 @@
 }
 .footer-block {
   margin: 25px 0;
+}
+
+@media screen and (max-width: 414px) {
+  .col-md-4 {
+    margin-left: 25%;
+  }
 }

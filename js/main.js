@@ -61,6 +61,12 @@ $(function () {
     // console.log(str);
     setupEditor(str, cls, dt, fn);
   });
+
+  new ClipboardJS(".btn-outline-default", {
+    text: function () {
+      return $("#code").getCodeMirror().getDoc().getValue();
+    },
+  });
 });
 
 function ganNoArgConstructor(cls) {
@@ -174,5 +180,22 @@ function setupEditor(str, cls, dt, fn) {
   }
   clsstr += tempvrls + "\n";
   clsstr += `${str}\n}`;
-  editor.setValue(clsstr);
+  editor.getDoc().setValue(clsstr);
 }
+
+(function ($) {
+  $.fn.getCodeMirror = function () {
+    return (this.is("textarea") ? this.next(".CodeMirror") : this).get(0)
+      .CodeMirror;
+  };
+})(jQuery);
+
+let msg = document.getElementById("msg");
+function showMsg() {
+  msg.classList.remove("d-none");
+}
+
+$(document).mouseup(function (e) {
+  if (event.target.closest(".d-none")) return;
+  msg.classList.add("d-none");
+});

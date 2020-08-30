@@ -1,9 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pojo Builder | Getter & Setter Maker</title>
     <meta charset="utf-8" />
+    <title>Quick POJO | Pojo Builder | Getter & Setter Maker</title>
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,user-scalable=no"
+    />
+
+    <meta
+      name="description"
+      content="Making POJO from web shouldn't be hard. It shouldn't require dozens of lines to write But most of all, it is extrimaly fast By javascript. That's why Quick POJO exists."
+    />
+    <meta property="og:title" content=".js" />
+    <meta
+      property="og:description"
+      content="A modern approach to copy text to clipboard. No Flash. No frameworks. Just 3kb gzipped"
+    />
+    <meta
+      property="og:url"
+      content="https://github.com/pol-alok/pojobuilder"
+    />
+    <meta
+      property="og:image"
+      content="https://zenorocha.github.io/clipboard.js/assets/images/facebook.png"
+    />
+    <link rel="icon" href="./images/browser-icon-114x114.png" type="image/x-icon" />
+    <link
+    rel="shortcut icon"
+    sizes="114x114"
+    href="./images/browser-icon-114x114.png"/>
+
     <link rel="stylesheet" href="./codemirror-5.57.0/doc/docs.css" />
     <link rel="stylesheet" href="./codemirror-5.57.0/lib/codemirror.css" />
     <link rel="stylesheet" href="./css/style.css" />
@@ -19,6 +46,7 @@
     <script src="./codemirror-5.57.0/addon/edit/matchbrackets.js"></script>
     <script src="./codemirror-5.57.0/addon/hint/show-hint.js"></script>
     <script src="./codemirror-5.57.0/mode/clike/clike.js"></script>
+    <script src="./codemirror-5.57.0/addon/display/placeholder.js"></script>
     <!-- Bootstrap cdns -->
     <link
       rel="stylesheet"
@@ -44,17 +72,53 @@
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <!-- clipboard js -->
+    <script src="./clipboard/dist/clipboard.min.js"></script>
+    <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
     <header>
-      <nav
-        class="navbar navbar-light bg-light shadow-sm border-bottom text-center"
-      >
-        <span class="navbar-brand mb-0 h1">Navbar</span>
-      </nav>
+      <header class="header gradient text-center bg-light">
+        <img class="img-fluid mt-5" src="./images/quick_pojo.png" alt="logo" />
+        <h4 class="subtitle">
+          Create your POJO on fly <i class="far fa-grin-alt"></i>
+        </h2>
+        <p class="gh-btns">
+          <a
+            class="github-button"
+            href="https://github.com/pol-alok/pojobuilder"
+            data-color-scheme="no-preference: light; light: light; dark: dark;"
+            data-size="large"
+            data-show-count="true"
+            aria-label="Star pol-alok/pojobuilder on GitHub"
+            >Star</a
+          >
+          <a
+            class="github-button"
+            href="https://github.com/pol-alok/pojobuilder/subscription"
+            data-color-scheme="no-preference: light; light: light; dark: dark;"
+            data-icon="octicon-eye"
+            data-size="large"
+            data-show-count="true"
+            aria-label="Watch pol-alok/pojobuilder on GitHub"
+            >Watch</a
+          >
+          <a
+            class="github-button"
+            href="https://github.com/pol-alok/pojobuilder/fork"
+            data-color-scheme="no-preference: light; light: light; dark: dark;"
+            data-icon="octicon-repo-forked"
+            data-size="large"
+            data-show-count="true"
+            aria-label="Fork pol-alok/pojobuilder on GitHub"
+            >Fork</a
+          >
+        </p>
+      </header>
     </header>
     <div class="container">
-      <div class="row mt-5">
+      <div class="row mt-3">
         <div class="col-md-6 p-3">
           <form method="POST" action="" id="login">
             <div class="row">
@@ -63,10 +127,10 @@
                   <div class="card-header text-center"><b>Create New</b></div>
                   <div class="card-body">
                     <div class="row p-3">
-                      <div class="col-sm-4">
+                      <div class="col-4">
                         <h5>class</h5>
                       </div>
-                      <div class="col-sm-4">
+                      <div class="col-4">
                         <input
                           type="text"
                           class="form-control form-control-sm mb-2"
@@ -76,13 +140,13 @@
                           required
                         />
                       </div>
-                      <div class="col-sm-4 text-center">
+                      <div class="col-4 text-center">
                         <h5>{</h5>
                       </div>
                     </div>
                     <div id="dyn"></div>
                     <div class="form-row">
-                      <div class="col-sm-5">
+                      <div class="col-5">
                         <input
                           type="text"
                           class="form-control form-control-sm mb-2"
@@ -92,7 +156,7 @@
                           required
                         />
                       </div>
-                      <div class="col-sm-5">
+                      <div class="col-5">
                         <input
                           type="text"
                           class="form-control form-control-sm mb-2"
@@ -102,7 +166,7 @@
                           required
                         />
                       </div>
-                      <div class="col-sm-2">
+                      <div class="col-2">
                         <div class="row">
                           <div class="col-md-12 text-center">
                             <button
@@ -117,7 +181,7 @@
                       </div>
                     </div>
                     <div class="form-row">
-                      <div class="col-sm-4">
+                      <div class="col-4">
                         <h5>}</h5>
                       </div>
                     </div>
@@ -253,19 +317,50 @@
             </div>
           </form>
         </div>
-        <div class="col-md-6 p-3">
+        <div class="col-md-6 p-3 mb-5">
           <div class="card shadow-lg">
             <div class="card-header text-center">
-              <b>Your POJO will be here soon..</b>
+              <div class="text-right">
+                <span id="msg" class="text-success d-none">Copied!</span>
+                <button
+                  class="btn btn-outline-default border shadow-sm"
+                  data-toggle="tooltip"
+                  title="Copy"
+                  onclick="showMsg()"
+                >
+                  <i class="far fa-clipboard"></i>
+                </button>
+              </div>
             </div>
             <div class="card-body">
-              <textarea id="code" name="code"></textarea>
+              <textarea
+                id="code"
+                name="code"
+                placeholder="Your POJO will be here soon..."
+              ></textarea>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <footer>
+      <div
+        class="card-footer text-muted text-center fixed-bottom border-top flex-column flex-md-row bg-white"
+      >
+        <p class="card-text">
+          Made with <span class="love">♥</span> by
+          <a
+            class="text-primary"
+            target="_blank"
+            href="https://pol-alok.github.io/portfolio/"
+            >Raviaknt Pal</a
+          >
+        </p>
+      </div>
+    </footer>
     <script src="./js/crud.js"></script>
     <script src="./js/main.js"></script>
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>
