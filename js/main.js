@@ -197,3 +197,9 @@ $(document).mouseup(function (e) {
   if (event.target.closest(".d-none")) return;
   msg.classList.add("d-none");
 });
+
+$("#clear").click(function () {
+  $(this).closest("form").find("input[type=text], textarea").val("");
+  variables = [];
+  displayItems();
+});

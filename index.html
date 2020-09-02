@@ -53,7 +53,7 @@
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
       crossorigin="anonymous"
     />
-    <!-- jquery for popover -->
+    <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"
@@ -88,13 +88,12 @@
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
-    <header class="header gradient text-center bg-light">
+    <header class="header gradient text-center bg-light shadow-sm">
       <img class="img-fluid mt-5" src="./images/quick_pojo.png" alt="logo" />
       <h4 class="subtitle">
         Create your POJO on fly <i class="far fa-grin-alt"></i>
       </h4>
       <p class="gh-btns">
-        <!-- Place this tag where you want the button to render. -->
         <!-- Place this tag where you want the button to render. -->
         <a
           class="github-button"
@@ -147,7 +146,6 @@
                           name="class"
                           id="class"
                           placeholder="Example"
-                          required
                         />
                       </div>
                       <div class="col-3 text-center">
@@ -161,19 +159,17 @@
                           type="text"
                           class="form-control form-control-sm mb-2 dtvl"
                           id="datatype"
-                          name="datatype_VrD-1"
+                          name="datatype_VrD100"
                           placeholder="data type"
-                          required
                         />
                       </div>
                       <div class="col-5">
                         <input
                           type="text"
                           class="form-control form-control-sm mb-2 alvl"
-                          name="fieldname_VrD-1"
+                          name="fieldname_VrD100"
                           id="fieldname"
                           placeholder="field name"
-                          required
                         />
                       </div>
                       <div class="col-2">
@@ -197,7 +193,16 @@
                     </div>
                     <div class="card-footer">
                       <div class="form-row">
-                        <div class="col-md-12 text-center">
+                        <div class="col-md-6 text-center">
+                          <a
+                            id="clear"
+                            class="btn btn-sm btn-block btn-danger mb-2"
+                          >
+                            Clear
+                            <i class="fas fa-broom"></i>
+                          </a>
+                        </div>
+                        <div class="col-md-6 text-center">
                           <button
                             type="submit"
                             class="btn btn-sm btn-block btn-primary mb-2"

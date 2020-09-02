@@ -41,6 +41,7 @@ $(function () {
     "short",
     "static",
     "strictfp",
+    "String",
     "super",
     "switch",
     "synchronized",
@@ -77,31 +78,39 @@ $(function () {
     `<p class="alert alert-danger small">Invalid name!</p>`
   );
 
-  $("#user-input").validate({
-    // initialize the plugin
-    submitHandler: function (form) {
-      submitData();
-      return false; // for demo
-    },
-  });
+  $("#user-input").on("submit", function (event) {
+    // adding rules for inputs with class 'comment'
+    $(".alvl").each(function () {
+      $(this).rules("add", {
+        required: true,
+        validVar: true,
+        reservedWords: true,
+        messages: {
+          required: `<p class="alert alert-danger small">opps! required</p>`,
+        },
+      });
+    });
 
-  $(".alvl").each(function () {
-    $(this).rules("add", {
-      required: true,
-      validVar: true,
-      reservedWords: true,
-      messages: {
-        required: `<p class="alert alert-danger small">opps! required</p>`,
-      },
+    $(".dtvl").each(function () {
+      $(this).rules("add", {
+        required: true,
+        validVar: true,
+        messages: {
+          required: `<p class="alert alert-danger small">opps! required</p>`,
+        },
+      });
     });
+
+    // prevent default submit action
+    event.preventDefault();
+
+    // test if form is valid
+    if ($("#user-input").validate().form()) {
+      console.log("validates");
+      submitData();
+    } else {
+      console.log("does not validate");
+    }
   });
-  $(".dtvl").each(function () {
-    $(this).rules("add", {
-      required: true,
-      validVar: true,
-      messages: {
-        required: `<p class="alert alert-danger small">opps! required</p>`,
-      },
-    });
-  });
+  $("#user-input").validate();
 });

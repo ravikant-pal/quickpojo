@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"
+      integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg=="
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      #docs {
+        display: block;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="myform" class="commentForm" method="get" action="">
+      <div>
+        <p id="inputs"><input class="comment" name="name0" /><br /></p>
+
+        <input class="submit" type="submit" value="Submit" />
+        <input type="button" value="add" id="addInput" />
+      </div>
+    </form>
+    <script>
+      $(document).ready(function () {
+        var numberIncr = 1; // used to increment the name for the inputs
+
+        function addInput() {
+          $("#inputs").append(
+            $('<input class="comment" name="name' + numberIncr + '" /><br/>')
+          );
+          numberIncr++;
+        }
+
+        $("#myform").on("submit", function (event) {
+          // adding rules for inputs with class 'comment'
+          $(".comment").each(function () {
+            $(this).rules("add", {
+              required: true,
+            });
+          });
+
+          // prevent default submit action
+          event.preventDefault();
+
+          // test if form is valid
+          if ($("#myform").validate().) {
+            console.log("validates");
+            alert("valid");
+          } else {
+            console.log("does not validate");
+          }
+        });
+
+        // set handler for addInput button click
+        $("#addInput").on("click", addInput);
+
+        // initialize the validator
+        $("#myform").validate();
+      });
+    </script>
+    <script src="./js/crud.js"></script>
+  </body>
+</html>
