@@ -201,5 +201,6 @@ $(document).mouseup(function (e) {
 $("#clear").click(function () {
   $(this).closest("form").find("input[type=text], textarea").val("");
   variables = [];
+  editor.getDoc().setValue("");
   displayItems();
 });
